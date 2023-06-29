@@ -3,42 +3,50 @@ import axios, { AxiosInstance } from "axios";
 import { Aluno } from "@/modal/aluno";
 
 export class AlunoClient{
-    private axiosClient : AxiosInstance;
+    private axiosAluno : AxiosInstance;
 
     constructor(){
-        this.axiosClient = axios.create({
+        this.axiosAluno = axios.create({
             baseURL:'http://localhost:8080/api/aluno',
             headers:{'Content-Type':'application/json'}
         });
     }
 
+    public async findById(id : number) : Promise<Aluno> {
+        try {
+            return (await this.axiosAluno.get<Aluno>(`/${id}`)).data
+        } catch (error : any) {
+            return Promise.reject(error.response)
+        }
+    }
+
     public async listAll() : Promise<Aluno[]> {
         try{
-            return(await this.axiosClient.get<Aluno[]>(`/lista`)).data;
+            return(await this.axiosAluno.get<Aluno[]>(`/lista`)).data;
         } catch(error :any){
             return Promise.reject(error.response);
         }
     }
 
-    public async cadastrar(aluno : Aluno) : Promise<void> {
+    public async cadastrar(aluno : Aluno) : Promise<string> {
         try{
-            return(await this.axiosClient.post('', aluno)).data;
+            return(await this.axiosAluno.post<string>(``, aluno)).data;
         } catch (error : any) {
             return Promise.reject(error.response);
         }
     }
 
-    public async editar(aluno : Aluno) : Promise<void> {
+    public async editar(id: number, aluno : Aluno) : Promise<string> {
         try {
-            return(await this.axiosClient.post(`/${aluno.id}`, aluno)).data;
+            return(await this.axiosAluno.put<string>(`/${id}`, aluno)).data;
         } catch (error : any) {
             return Promise.reject(error.response);
         }
     }
 
-    public async deletar(aluno : Aluno) : Promise<string> {
+    public async deletar(id : number) : Promise<string> {
         try {
-            return (await this.axiosClient.delete(`/${aluno.id}`)).data;
+            return (await this.axiosAluno.delete<string>(`/${id}`)).data;
         } catch (error : any) {
             return Promise.reject(error.response);
         }

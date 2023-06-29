@@ -7,9 +7,4 @@ export class Aluno extends AbstractEntity{
     rg! : String
     curso! : Curso
     periodo! : Periodo
-
-    constructor(){
-        super()
-        this.ativo = true
-    }
 }

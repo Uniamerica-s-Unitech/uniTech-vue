@@ -39,21 +39,22 @@
                         <tr>
                             <th>ID</th>
                             <th>NOME</th>
+                            <th>RA</th>
                             <th>RG</th>
                             <th>CURSO</th>
                             <th>PERÍODO</th>
-                            <th>RA</th>
                             <th>AÇÃO</th>
                         </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>Homam Alsuyoufi</td>
-                            <td>f3588117</td>
-                            <td>Eng.sofwaer</td>
-                            <td>2 semestre</td>
-                            <td>405512</td>
-                            <td><button>Acessar</button></td>
+                        <tr v-for="aluno in alunos" :key="aluno.id">
+                            <td>{{ aluno.id }}</td>
+                            <td>{{ aluno.nome }}</td>
+                            <td>{{ aluno.ra }}</td>
+                            <td>{{ aluno.rg }}</td>
+                            <td>{{ aluno.curso.nome }}</td>
+                            <td>{{ aluno.periodo.nome }}</td>
+                            <td>
+                                <router-link :to="{ path: '/acessarAluno', query: { id: aluno.id } }" class="acessar">Acessar</router-link>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -63,11 +64,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,ref } from 'vue';
+import { defineComponent,ref,onMounted} from 'vue';
 import modalCadastrarPeriodo from '../components/cadastrarPeriodo.vue'
 import modalCadastrarCurso from '../components/cadastrarCurso.vue'
 import modalCadastrarAluno from '../components/cadastrarAluno.vue'
-export default({
+import { Aluno } from '@/modal/aluno';
+import AlunoClient from '@/client/AlunoClient';
+export default defineComponent({
+    name: 'Alunos',
     components: {
         modalCadastrarPeriodo,
         modalCadastrarCurso,
@@ -77,8 +81,22 @@ export default({
         return{
             modalPeriodoAberto: ref(false),
             modalCursoAberto: ref(false),
-            modalAlunoAberto: ref(false)
+            modalAlunoAberto: ref(false),
+            alunos: [] as Aluno[]
         };
+    },
+    methods: {
+    async buscarAlunos() {
+      try {
+            this.alunos = await AlunoClient.listAll();
+        } 
+        catch (error) {
+            console.error('Erro ao buscar alunos:', error);
+        }
+    },
+    },
+    mounted() {
+        this.buscarAlunos();
     },
     setup() {
     const modalPeriodoAberto = ref(false);
@@ -257,23 +275,25 @@ main{
             font-size: 20px;
             padding-bottom: 2rem;
         }
-        tr{
-            td{
-                button{
-                    background-color: var(--accent-green);
-                    padding: 0.5rem 1rem;
-                    border: none;
-                    border-radius: 1rem;
-                    color: var(--accent-wait);
-                    cursor: pointer;
-                }
-                button:hover{
-                    background-color: var(--accent-wait);
-                    color: var(--accent-black);
-                    transition: .5s;
-                }
+        .acessar{
+            background-color: var(--accent-green);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 1rem;
+            color: var(--accent-wait);
+            cursor: pointer;
+            a{
+                text-decoration: none;
             }
         }
+        .acessar:hover{
+            background-color: var(--accent-wait);
+            color: var(--accent-black);
+            transition: .5s;
+        }
+    }
+    a{
+        text-decoration: none;
     }
 }
 </style>

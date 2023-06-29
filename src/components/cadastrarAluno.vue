@@ -45,7 +45,6 @@ import AlunoClient from '@/client/AlunoClient';
 import { Aluno } from '@/modal/aluno';
 import { Periodo } from '@/modal/periodo';
 import { Curso } from '@/modal/curso';
-
 export default defineComponent({
   name: 'modalCadastrarAluno',
   data() {
@@ -78,11 +77,6 @@ export default defineComponent({
       }
      },
     cadastrar() {
-      //this.aluno.Curso = this.cursos.find(curso => curso.id === parseInt(this.cursoSelecionado));
-      //this.aluno.Periodo = this.periodos.find(periodo => periodo.id === parseInt(this.periodoSelecionado));
-  
-      console.log(this.aluno);
-  
       AlunoClient.cadastrar(this.aluno)
         .then(success => {
           this.aluno = new Aluno();
