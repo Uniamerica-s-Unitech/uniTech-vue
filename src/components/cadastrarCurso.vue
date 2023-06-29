@@ -1,10 +1,10 @@
 <template>
     <div id="modal">
       <div id="modal_content">
-        <p>Curso</p>
+        <p>Novo curso</p>
         <form>
             <div class="input">
-                <label for="nome">Nome do curso:</label>
+                <h2 for="nome">Nome do curso:</h2>
                 <input type="text" id="nome" name="nome" v-model="curso.nome" placeholder="Informe nome do curso">
             </div>
             <div class="btns">

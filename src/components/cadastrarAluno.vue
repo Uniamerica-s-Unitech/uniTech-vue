@@ -1,27 +1,27 @@
 <template>
     <div id="modal">
       <div id="modal_content">
-        <p>Aluno</p>
+        <p>Novo aluno</p>
         <form>
             <div class="input">
-                <label for="nome">Nome do aluno:</label>
+                <h2 for="nome">Nome do aluno:</h2>
                 <input type="text" id="nome" name="nome" v-model="aluno.nome" placeholder="Informe nome do aluno">
 
-                <label for="nome">Números de RA:</label>
+                <h2 for="nome">Números de RA:</h2>
                 <input type="text" id="ra" name="nome" v-model="aluno.ra" placeholder="Informe o RA">
                 
-                <label for="nome">Números de RG:</label>
+                <h2 for="nome">Números de RG:</h2>
                 <input type="text" id="rg" name="nome" v-model="aluno.rg" placeholder="Informe o RG">
                 <div>
-                    <label for="periodo">Selecione um período:</label>
-                    <select id="periodo" v-model="aluno.periodo">
+                    <h2 for="periodo">Selecione um período:</h2>
+                    <select id="periodo" :v-model="aluno.periodo">
                         <option value="">Selecione um período</option>
                         <option v-for="periodo in periodos" :key="periodo.id" :value="periodo">{{ periodo.nome }}</option>
                     </select>
                 </div>
                 <div>
-                    <label for="curso">Selecione um curso:</label>
-                    <select id="curso" v-model="aluno.curso">
+                    <h2 for="curso">Selecione um curso:</h2>
+                    <select id="curso" :v-model="aluno.curso">
                         <option value="">Selecione um curso</option>
                         <option v-for="curso in cursos" :key="curso.id" :value="curso">{{ curso.nome }}</option>
                     </select>
@@ -133,8 +133,21 @@ export default defineComponent({
       flex-direction: column;
       gap: .5rem;
       margin-bottom: 2rem;
-      label{
-        font-size: 20px;
+      input[type="text"]:focus{
+        box-shadow: 0 0 0 0;
+        outline: 0;
+      }
+      div{
+        select:focus{
+          box-shadow: 0 0 0 0;
+          outline: 0;
+        }
+        select{
+          height: 2rem;
+          border-color: var(--accent-green);
+          border-width: 2px;
+          font-size: 18px;
+        }
       }
       input[type="text"]{
         height: 2rem;
@@ -142,20 +155,13 @@ export default defineComponent({
         border: 2px solid var(--accent-green);
         font-size: 18px;
       }
+      
     }
 
     .btns{
       display: flex;
       justify-content: space-evenly;
-      .btn_cadastrar{
-        padding: .5rem 1rem;
-        border: none;
-        background-color: var(--accent-green);
-        color: var(--accent-wait);
-        border-radius: .8rem;
-        cursor: pointer;
-      }
-      .btn_fechar{
+      .btn_cadastrar , .btn_fechar{
         padding: .5rem 1rem;
         border: none;
         background-color: var(--accent-green);

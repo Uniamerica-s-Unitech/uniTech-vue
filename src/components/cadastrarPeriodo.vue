@@ -1,10 +1,10 @@
 <template>
     <div id="modal">
       <div id="modal_content">
-        <p>Período</p>
+        <p>Novo período</p>
         <form>
             <div class="input">
-                <label for="nome">Nome do período:</label>
+                <h2 for="nome">Nome do período:</h2>
                 <input type="text" id="nome" name="nome" v-model="periodo.nome" placeholder="Informe nome do período">
             </div>
             <div class="btns">
