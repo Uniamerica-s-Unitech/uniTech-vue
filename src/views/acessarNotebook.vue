@@ -1,37 +1,19 @@
 <template>
   <main class="main">
     <div>
-      <h2>Nome:</h2>
-      <input type="text" v-model="aluno.nome">
-    </div>
-
-    <div>
-      <h2>RA:</h2>
-      <input type="text" v-model="aluno.ra">
-    </div>
-
-    <div>
-      <h2>RG:</h2>
-      <input type="text" v-model="aluno.rg">
+      <h2>ID-PATRIMONIO:</h2>
+      <input type="text" v-model="notebook.patrimonio">
     </div>
 
     <div class="select">
-      <h2>CURSO:</h2>
-      <select type="text" v-model="aluno.curso">
-        <option v-for="item in cursos" :key="item.id" :value="item">
+      <h2>MODELO:</h2>
+      <select type="text" v-model="notebook.modelo">
+        <option v-for="item in modelos" :key="item.id" :value="item">
           {{ item.nome }}
         </option>
       </select>
     </div>
 
-    <div class="select">
-      <h2>PERÍODO:</h2>
-      <select type="text" v-model="aluno.periodo">
-        <option v-for="item in periodos" :key="item.id" :value="item">
-          {{ item.nome }}
-        </option>
-      </select>
-    </div>
     <div class="btns">
       <button class="btn_editar" @click="onClickEditar()">
         Editar
@@ -39,7 +21,7 @@
       <button class="btn_deletar" @click="onClickExcluir()">
         Excluir
       </button>
-      <router-link to='/alunos' class="acessar">Voltar</router-link>
+      <router-link to='/notebook' class="acessar">Voltar</router-link>
     </div>
   </main>
 </template>
@@ -47,22 +29,22 @@
 <script lang="ts">
 import { defineComponent} from 'vue';
 
-import { Aluno } from '@/modal/aluno';
-import AlunoClient from '@/client/AlunoClient';
+import { Notebook } from '@/modal/notebook';
+import NotebookClient from '@/client/NotebookClient';
 
-import { Curso } from '@/modal/curso';
-import CursoClient from '@/client/CursoClient';
+import { Modelo } from '@/modal/modelo';
+import ModeloClient from '@/client/ModeloClient';
 
-import { Periodo } from '@/modal/periodo';
-import PeriodoClient from '@/client/PeriodoClient';
+import { Marca } from '@/modal/marca';
+import MarcaClient from '@/client/MarcaClient';
 
 export default defineComponent({
-  name: 'acessarAluno',
+  name: 'acessarNotebook',
   data() {
     return {
-      aluno: new Aluno(),
-      cursos: new Array<Curso>(),
-      periodos: new Array<Periodo>(),
+      notebook: new Notebook(),
+      modelos: new Array<Modelo>(),
+      marcas: new Array<Marca>(),
     };
   },
   computed: {
@@ -76,22 +58,22 @@ export default defineComponent({
   this.findById(Number(this.id));
   }
 
-  this.buscarPeriodos();
-  this.buscarCursos();
+  this.buscarMarcas();
+  this.buscarModelos();
   },
   methods: {
     findById(id: number) {
-      AlunoClient.findById(id)
-        .then((aluno) => {
-          this.aluno = aluno;
+      NotebookClient.findById(id)
+        .then((notebook) => {
+          this.notebook = notebook;
         })
       .catch(error => {
         console.log(error);
       });
     },
-    buscarPeriodos() {
-      PeriodoClient.listAll().then(sucess =>{
-        this.periodos = sucess;
+    buscarMarcas() {
+      MarcaClient.listAll().then(sucess =>{
+        this.marcas = sucess;
         console.log(sucess);
       })
       .catch(error =>{
@@ -99,9 +81,9 @@ export default defineComponent({
 
       })
     },
-    buscarCursos() {
-      CursoClient.listAll().then(sucess =>{
-        this.cursos = sucess;
+    buscarModelos() {
+      ModeloClient.listAll().then(sucess =>{
+        this.modelos = sucess;
         console.log(sucess);
       })
       .catch(error =>{
@@ -111,9 +93,9 @@ export default defineComponent({
     },
     onClickEditar(){
       console.log("Antes do metodo");
-      AlunoClient.editar(this.aluno.id, this.aluno)
+      NotebookClient.editar(this.notebook.id, this.notebook)
       .then(sucess => {
-        this.aluno = new Aluno()
+        this.notebook = new Notebook()
         console.log(sucess);        
       })
       .catch(error => {
@@ -121,9 +103,9 @@ export default defineComponent({
       });
     },
     onClickExcluir(){
-      AlunoClient.deletar(this.aluno.id)
+      NotebookClient.deletar(this.notebook.id)
       .then(sucess =>{
-        this.aluno = new Aluno();
+        this.notebook = new Notebook();
       })
       .catch(error =>{
         console.log(error)

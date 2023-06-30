@@ -4,7 +4,7 @@
             <div id="head">
                 <div id="serch">
                     <img id="serch_icon" src="../img/search_icon.svg" alt="serch">
-                    <input id="serch_input" type="search" placeholder="Pesquisar aluno....">
+                    <input id="serch_input" type="search" placeholder="Pesquisar aluno ou ra" v-model="termoPesquisa" @input="realizarPesquisa">
                 </div>
                 <div id="botais">
                     <div>
@@ -37,7 +37,7 @@
                 <div class="scroll">
                     <table>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>NOME</th>
                             <th>RA</th>
                             <th>RG</th>
@@ -45,14 +45,14 @@
                             <th>PERÍODO</th>
                             <th>AÇÃO</th>
                         </tr>
-                        <tr v-for="aluno in alunos" :key="aluno.id">
-                            <td>{{ aluno.id }}</td>
-                            <td>{{ aluno.nome }}</td>
-                            <td>{{ aluno.ra }}</td>
-                            <td>{{ aluno.rg }}</td>
-                            <td>{{ aluno.curso.nome }}</td>
-                            <td>{{ aluno.periodo.nome }}</td>
-                            <td>
+                        <tr v-for="(aluno, index) in alunos" :key="aluno.id">
+                            <td class="id">{{ index + 1 }}</td>
+                            <td class="nome">{{ aluno.nome }}</td>
+                            <td class="ra">{{ aluno.ra }}</td>
+                            <td class="rg">{{ aluno.rg }}</td>
+                            <td class="curso">{{ aluno.curso.nome }}</td>
+                            <td class="periodo">{{ aluno.periodo.nome }}</td>
+                            <td class="botao">
                                 <router-link :to="{ path: '/acessarAluno', query: { id: aluno.id } }" class="acessar">Acessar</router-link>
                             </td>
                         </tr>
@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,ref,onMounted} from 'vue';
+import { defineComponent,ref} from 'vue';
 import modalCadastrarPeriodo from '../components/cadastrarPeriodo.vue'
 import modalCadastrarCurso from '../components/cadastrarCurso.vue'
 import modalCadastrarAluno from '../components/cadastrarAluno.vue'
@@ -82,7 +82,8 @@ export default defineComponent({
             modalPeriodoAberto: ref(false),
             modalCursoAberto: ref(false),
             modalAlunoAberto: ref(false),
-            alunos: [] as Aluno[]
+            alunos: [] as Aluno[],
+            termoPesquisa: ''
         };
     },
     methods: {
@@ -94,6 +95,18 @@ export default defineComponent({
             console.error('Erro ao buscar alunos:', error);
         }
     },
+    realizarPesquisa() {
+            const termoPesquisa = this.termoPesquisa.toLowerCase();
+            if (termoPesquisa === '') {
+                this.buscarAlunos(); // Restaura a lista original de alunos
+            } else {
+                this.alunos = this.alunos.filter(aluno => {
+                    const nome = aluno.nome.toLowerCase();
+                    const ra = aluno.ra.toLowerCase();
+                    return nome.includes(termoPesquisa) || ra.includes(termoPesquisa);
+                });
+            }
+        },
     },
     mounted() {
         this.buscarAlunos();
@@ -261,15 +274,40 @@ main{
     }
 
     table{
-        padding: 1rem;
+        padding: 2rem;
         margin: 0 auto;
-        width: 95%;
+        width: 100%;
         border-spacing: 0;
     
         td{
-            height: 3rem;
+            height: 4rem;
             text-align: center;
             font-size: 18px;
+        }
+        tr{
+            width: 100%;
+        }
+        td.id{
+            width: 1%;
+        }
+        td.nome{
+            width: 20%;
+            word-wrap: break-word;
+        }
+        td.rg{
+            width: 10%;
+        }
+        td.ra{
+            width: 10%;
+        }
+        td.curso{
+            width: 20%;
+        }
+        td.periodo{
+            width: 20%;
+        }
+        td.botao{
+            width: 19%;
         }
         th{
             font-size: 20px;

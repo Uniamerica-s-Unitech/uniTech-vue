@@ -4,8 +4,8 @@
         <p>Novo período</p>
         <form>
             <div class="input">
-                <h2 for="nome">Nome do período:</h2>
-                <input type="text" id="nome" name="nome" v-model="periodo.nome" placeholder="Informe nome do período">
+                <h2>Nome do período:</h2>
+                <input type="text" v-model="periodo.nome" placeholder="Informe nome do período">
             </div>
             <div class="btns">
                 <button class="btn_cadastrar" type="button" @click="cadastrar()">Cadastrar</button>

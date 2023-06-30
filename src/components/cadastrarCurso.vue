@@ -4,8 +4,8 @@
         <p>Novo curso</p>
         <form>
             <div class="input">
-                <h2 for="nome">Nome do curso:</h2>
-                <input type="text" id="nome" name="nome" v-model="curso.nome" placeholder="Informe nome do curso">
+                <h2>Nome do curso:</h2>
+                <input type="text" v-model="curso.nome" placeholder="Informe nome do curso">
             </div>
             <div class="btns">
                 <button class="btn_cadastrar" type="button" @click="cadastrar()">Cadastrar</button>

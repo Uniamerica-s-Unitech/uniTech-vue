@@ -4,25 +4,25 @@
         <p>Novo aluno</p>
         <form>
             <div class="input">
-                <h2 for="nome">Nome do aluno:</h2>
-                <input type="text" id="nome" name="nome" v-model="aluno.nome" placeholder="Informe nome do aluno">
+                <h2>Nome do aluno:</h2>
+                <input type="text" v-model="aluno.nome" placeholder="Informe nome do aluno">
 
-                <h2 for="nome">Números de RA:</h2>
-                <input type="text" id="ra" name="nome" v-model="aluno.ra" placeholder="Informe o RA">
+                <h2>Números de RA:</h2>
+                <input type="text" v-model="aluno.ra" placeholder="Informe o RA">
                 
-                <h2 for="nome">Números de RG:</h2>
-                <input type="text" id="rg" name="nome" v-model="aluno.rg" placeholder="Informe o RG">
+                <h2>Números de RG:</h2>
+                <input type="text" v-model="aluno.rg" placeholder="Informe o RG">
                 <div>
-                    <h2 for="periodo">Selecione um período:</h2>
-                    <select id="periodo" v-model="aluno.periodo">
-                        <option value="">Selecione um período</option>
+                    <h2>Selecione um período:</h2>
+                    <select v-model="aluno.periodo">
+                        <option>Selecione um período</option>
                         <option v-for="periodo in periodos" :key="periodo.id" :value="periodo">{{ periodo.nome }}</option>
                     </select>
                 </div>
                 <div>
-                    <h2 for="curso">Selecione um curso:</h2>
-                    <select id="curso" v-model="aluno.curso">
-                        <option value="">Selecione um curso</option>
+                    <h2>Selecione um curso:</h2>
+                    <select v-model="aluno.curso">
+                        <option>Selecione um curso</option>
                         <option v-for="curso in cursos" :key="curso.id" :value="curso">{{ curso.nome }}</option>
                     </select>
                 </div>
