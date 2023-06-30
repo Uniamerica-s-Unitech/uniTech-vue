@@ -17,8 +17,8 @@
 
     <div class="select">
       <h2>CURSO:</h2>
-      <select type="text" :v-model="aluno.curso">
-        <option v-for="item in cursos" :key="item.id" :value="item.nome">
+      <select type="text" v-model="aluno.curso">
+        <option v-for="item in cursos" :key="item.id" :value="item">
           {{ item.nome }}
         </option>
       </select>
@@ -26,8 +26,8 @@
 
     <div class="select">
       <h2>PERÍODO:</h2>
-      <select type="text" :v-model="aluno.periodo">
-        <option v-for="item in periodos" :key="item.id" :value="item.nome">
+      <select type="text" v-model="aluno.periodo">
+        <option v-for="item in periodos" :key="item.id" :value="item">
           {{ item.nome }}
         </option>
       </select>

@@ -14,14 +14,14 @@
                 <input type="text" id="rg" name="nome" v-model="aluno.rg" placeholder="Informe o RG">
                 <div>
                     <h2 for="periodo">Selecione um período:</h2>
-                    <select id="periodo" :v-model="aluno.periodo">
+                    <select id="periodo" v-model="aluno.periodo">
                         <option value="">Selecione um período</option>
                         <option v-for="periodo in periodos" :key="periodo.id" :value="periodo">{{ periodo.nome }}</option>
                     </select>
                 </div>
                 <div>
                     <h2 for="curso">Selecione um curso:</h2>
-                    <select id="curso" :v-model="aluno.curso">
+                    <select id="curso" v-model="aluno.curso">
                         <option value="">Selecione um curso</option>
                         <option v-for="curso in cursos" :key="curso.id" :value="curso">{{ curso.nome }}</option>
                     </select>
