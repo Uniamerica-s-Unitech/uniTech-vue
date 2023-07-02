@@ -27,6 +27,13 @@ export class TicketClient{
             return Promise.reject(error.response);
         }
     }
+    public async listaAberta() : Promise<Ticket[]> {
+        try{
+            return(await this.axiosTicket.get<Ticket[]>(`/aberta`)).data;
+        } catch(error :any){
+            return Promise.reject(error.response);
+        }
+    }
 
     public async cadastrar(ticket : Ticket) : Promise<string> {
         try{
@@ -39,14 +46,6 @@ export class TicketClient{
     public async editar(id: number , ticket : Ticket) : Promise<string> {
         try {
             return(await this.axiosTicket.put<string>(`/${id}`, ticket)).data;
-        } catch (error : any) {
-            return Promise.reject(error.response);
-        }
-    }
-
-    public async deletar(id: number) : Promise<string> {
-        try {
-            return (await this.axiosTicket.delete<string>(`/${id}`)).data;
         } catch (error : any) {
             return Promise.reject(error.response);
         }

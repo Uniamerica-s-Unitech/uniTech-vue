@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/home.vue'
-import Alunos from '../views/alunos.vue'
-import Notebook from '../views/notebook.vue'
+import Home from '@/views/home.vue'
+import Alunos from '@/views/alunos.vue'
+import Notebook from '@/views/notebook.vue'
 import acessarAluno from '@/views/acessarAluno.vue'
 import acessarNotebook from '@/views/acessarNotebook.vue'
+import acessarTicket from '@/views/acessarTicket.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Alunos
   },
   {
+    path: '/notebook',
+    name: 'notebook',
+    component: Notebook
+  },
+  {
     path: '/acessarAluno',
     name: 'acessarAluno',
     component: acessarAluno
@@ -27,9 +33,9 @@ const routes: Array<RouteRecordRaw> = [
     component: acessarNotebook
   },
   {
-    path: '/notebook',
-    name: 'notebook',
-    component: Notebook
+    path: '/acessarTicket',
+    name: 'acessarTicket',
+    component: acessarTicket
   }
 ]
 

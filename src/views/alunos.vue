@@ -65,9 +65,9 @@
 
 <script lang="ts">
 import { defineComponent,ref} from 'vue';
-import modalCadastrarPeriodo from '../components/cadastrarPeriodo.vue'
-import modalCadastrarCurso from '../components/cadastrarCurso.vue'
-import modalCadastrarAluno from '../components/cadastrarAluno.vue'
+import modalCadastrarPeriodo from '@/components/cadastrarPeriodo.vue'
+import modalCadastrarCurso from '@/components/cadastrarCurso.vue'
+import modalCadastrarAluno from '@/components/cadastrarAluno.vue'
 import { Aluno } from '@/modal/aluno';
 import AlunoClient from '@/client/AlunoClient';
 export default defineComponent({
@@ -83,6 +83,7 @@ export default defineComponent({
             modalCursoAberto: ref(false),
             modalAlunoAberto: ref(false),
             alunos: [] as Aluno[],
+            alunosOriginais: [] as Aluno[],
             termoPesquisa: ''
         };
     },
@@ -90,22 +91,23 @@ export default defineComponent({
     async buscarAlunos() {
       try {
             this.alunos = await AlunoClient.listAll();
+            this.alunosOriginais = [...this.alunos];
         } 
         catch (error) {
             console.error('Erro ao buscar alunos:', error);
         }
     },
     realizarPesquisa() {
-            const termoPesquisa = this.termoPesquisa.toLowerCase();
-            if (termoPesquisa === '') {
-                this.buscarAlunos(); // Restaura a lista original de alunos
-            } else {
-                this.alunos = this.alunos.filter(aluno => {
-                    const nome = aluno.nome.toLowerCase();
-                    const ra = aluno.ra.toLowerCase();
-                    return nome.includes(termoPesquisa) || ra.includes(termoPesquisa);
-                });
-            }
+        const termoPesquisa = this.termoPesquisa.toLowerCase();
+      if (termoPesquisa === '') {
+        this.alunos = [...this.alunosOriginais];
+      } else {
+        this.alunos = this.alunosOriginais.filter((aluno) => {
+          const nome = aluno.nome.toLowerCase();
+          const ra = aluno.ra.toLowerCase();
+          return nome.includes(termoPesquisa) || ra.includes(termoPesquisa);
+        });
+      }
         },
     },
     mounted() {
@@ -156,182 +158,49 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-:root {
-    --accent-green: rgb(12, 141, 12);
-    --accent-grey: rgb(185, 185, 185);
-    --accent-wait: #fff;
-    --accent-black: #000;
-}
-#body{
+#serch{
     display: flex;
-    flex-direction: column;
-    width: 82%;
-}
+    align-items: center;
+    width: 65%;
+    gap: 0.7rem;
 
-header{
-    margin-bottom: 2rem;
-    #head{
-        display: flex;
-        padding: 1rem;
-        #serch{
-            display: flex;
-            align-items: center;
-            width: 65%;
-            gap: 0.7rem;
-
-            #serch_icon{
-                width: 2rem;
-                height: 2rem;
-            }
-            #serch_input{
-               width: 100%; 
-               height: 100%;
-               border: none;
-               outline: 0;
-               font-size: 25px;
-               
-               
-            }
-        }
-        #botais{
-            display: flex;
-            align-items: center;
-            flex-direction: row-reverse;
-            gap: 1rem;
-            margin-right: 1rem;
-            width: 37.5%;
-
-            .btn{
-                padding: 0.5rem;
-                border-radius: 1rem;
-                border: none;
-                background-color: var(--accent-green);
-                color: var(--accent-wait);
-                font-size: 15px;
-                box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-                cursor: pointer;
-            }
-
-            .btn:hover{
-                background-color: var(--accent-grey);
-                color: var(--accent-black);
-                transition: .5s;
-            }
-        }
-        
+    #serch_icon{
+        width: 2rem;
+        height: 2rem;
     }
-    
-    hr{
-        border: 1px solid var(--accent-green);        
+    #serch_input{
+       width: 100%; 
+       height: 100%;
+       border: none;
+       outline: 0;
+       font-size: 25px;
+       
+       
     }
 }
-h1{
-    margin: 0 0 3rem 3rem;
-    font-size: 35px;
-}
+#botais{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 1rem;
+    margin-right: 1rem;
+    width: 37.5%;
 
+    .btn{
+        padding: 0.5rem;
+        border-radius: 1rem;
+        border: none;
+        background-color: var(--accent-green);
+        color: var(--accent-wait);
+        font-size: 15px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+    }
 
-main{
-    height: 100%;
-    
-    .quadro_tabela{
+    .btn:hover{
         background-color: var(--accent-grey);
-        width: 95%;
-        border-radius: 3rem ;
-        margin: 0 auto;
-        padding: 1.5rem 0;
-    }
-    .scroll{
-        overflow: auto;
-        height: 60vh;
-        flex-grow: 1;
-        background-color: var(--accent-grey);
-        width: 99%;
-        margin: 0 auto;
-    }
-    /* width */
-    ::-webkit-scrollbar {
-        width: 10px;
-    
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-        border-radius: 2rem;
-    
-    }
-    
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: var(--accent-green); 
-        border-radius: 2rem;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555; 
-    }
-
-    table{
-        padding: 2rem;
-        margin: 0 auto;
-        width: 100%;
-        border-spacing: 0;
-    
-        td{
-            height: 4rem;
-            text-align: center;
-            font-size: 18px;
-        }
-        tr{
-            width: 100%;
-        }
-        td.id{
-            width: 1%;
-        }
-        td.nome{
-            width: 20%;
-            word-wrap: break-word;
-        }
-        td.rg{
-            width: 10%;
-        }
-        td.ra{
-            width: 10%;
-        }
-        td.curso{
-            width: 20%;
-        }
-        td.periodo{
-            width: 20%;
-        }
-        td.botao{
-            width: 19%;
-        }
-        th{
-            font-size: 20px;
-            padding-bottom: 2rem;
-        }
-        .acessar{
-            background-color: var(--accent-green);
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 1rem;
-            color: var(--accent-wait);
-            cursor: pointer;
-            a{
-                text-decoration: none;
-            }
-        }
-        .acessar:hover{
-            background-color: var(--accent-wait);
-            color: var(--accent-black);
-            transition: .5s;
-        }
-    }
-    a{
-        text-decoration: none;
+        color: var(--accent-black);
+        transition: .5s;
     }
 }
 </style>

@@ -15,7 +15,7 @@
       <input type="text" v-model="aluno.rg">
     </div>
 
-    <div class="select">
+    <div>
       <h2>CURSO:</h2>
       <select type="text" v-model="aluno.curso">
         <option v-for="item in cursos" :key="item.id" :value="item">
@@ -24,7 +24,7 @@
       </select>
     </div>
 
-    <div class="select">
+    <div>
       <h2>PERÍODO:</h2>
       <select type="text" v-model="aluno.periodo">
         <option v-for="item in periodos" :key="item.id" :value="item">
@@ -39,7 +39,7 @@
       <button class="btn_deletar" @click="onClickExcluir()">
         Excluir
       </button>
-      <router-link to='/alunos' class="acessar">Voltar</router-link>
+      <router-link to='/alunos'>Voltar</router-link>
     </div>
   </main>
 </template>
@@ -132,81 +132,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style lang="scss">
-:root {
-    --accent-green: rgb(12, 141, 12);
-    --accent-grey: #ccc;
-    --accent-wait: #fff;
-    --accent-black: #000;
-    --accent-red : rgb(255, 0, 0);
-    --accent-yellow : rgb(255, 255, 0);
-}
-.main{
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10rem;
-  background-color: var(--accent-grey);
-  padding: 2rem;
-  border-radius: 1rem;
-  gap: 1.5rem;
-
-  div{
-    select:focus{
-      box-shadow: 0 0 0 0;
-      outline: 0;
-    }
-    select{
-      height: 2rem;
-      border-color: var(--accent-green);
-      border-width: 2px;
-      font-size: 18px;
-    }
-  }
-  input[type="text"]{
-    height: 2rem;
-    width: 15rem;
-    border: 2px solid var(--accent-green);
-    font-size: 18px;
-    margin-top: .4rem;
-  }
-
-  .btns{
-      display: flex;
-      justify-content: space-evenly;
-      .btn_editar , .btn_deletar{
-        padding: .2rem .5rem;
-        border: none;
-        background-color: var(--accent-green);
-        color: var(--accent-wait);
-        border-radius: .8rem;
-        cursor: pointer;
-        font-size: 18px;
-      }
-
-      .btn_editar:hover{
-        background-color: var(--accent-yellow);
-        color: var(--accent-black);
-        transition: .5s;
-      }
-      .btn_deletar:hover{
-        background-color: var(--accent-red);
-        transition: .5s;
-      }
-      a{
-        padding: .5rem 1rem;
-        border: none;
-        background-color: var(--accent-green);
-        color: var(--accent-wait);
-        border-radius: .8rem;
-        cursor: pointer;
-      }
-      a:hover{
-        background-color: var(--accent-wait);
-        color: var(--accent-black);
-        transition: .5s;
-      }
-    }
-}
-</style>
