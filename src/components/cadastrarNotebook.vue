@@ -1,47 +1,59 @@
 <template>
-    <div id="modal">
-      <div id="modal_content">
-        <p>Novo notebook</p>
-        <form>
-            <div class="input">
-                <h2>Id-patrimonio do notebook:</h2>
-                <input type="text" v-model="notebook.patrimonio" placeholder="Informe nome do notebook">
+  <div class="modal">
+    <div class="modal_content">
+      <p>Novo notebook</p>
+      <form>
+        <div class="input">
+          <h2>Id-patrimonio do notebook:</h2>
+          <input
+            type="text"
+            v-model="notebook.patrimonio"
+            placeholder="Informe nome do notebook"
+          />
 
-                <div>
-                    <h2>Selecione um modelo:</h2>
-                    <select v-model="notebook.modelo">
-                        <option>Selecione um modelo</option>
-                        <option v-for="modelo in modelos" :key="modelo.id" :value="modelo">{{ modelo.nome }}</option>
-                    </select>
-                </div>
-            </div>
-    
-            <div class="btns">
-                <button class="btn_cadastrar" type="button" @click="cadastrar()">Cadastrar</button>
-                <button class="btn_fechar" @click="fecharModal">Fechar</button>
-            </div>
-        </form>
-      </div>
+          <div>
+            <h2>Selecione um modelo:</h2>
+            <select v-model="notebook.modelo">
+              <option>Selecione um modelo</option>
+              <option
+                v-for="modelo in modelos"
+                :key="modelo.id"
+                :value="modelo"
+              >
+                {{ modelo.nome }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="btn_cadastrar" type="button" @click="cadastrar()">
+            Cadastrar
+          </button>
+          <button class="btn_fechar" @click="fecharModal">Fechar</button>
+        </div>
+      </form>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import NotebookClient from '@/client/NotebookClient';
-import ModeloClient from '@/client/ModeloClient';
-import { Notebook } from '@/modal/notebook';
-import { Modelo } from '@/modal/modelo';
+import { defineComponent } from "vue";
+import NotebookClient from "@/client/NotebookClient";
+import ModeloClient from "@/client/ModeloClient";
+import { Notebook } from "@/modal/notebook";
+import { Modelo } from "@/modal/modelo";
 export default defineComponent({
-  name: 'modalCadastrarNotebook',
+  name: "modalCadastrarNotebook",
   data() {
     return {
-        notebook: new Notebook(),
-        modelos: new Array<Modelo>(),
-        modeloSelecionado: '',
-        exibirModal: true
+      notebook: new Notebook(),
+      modelos: new Array<Modelo>(),
+      modeloSelecionado: "",
+      exibirModal: true,
     };
   },
-  mounted(){
+  mounted() {
     this.buscarModelos();
   },
   methods: {
@@ -54,16 +66,16 @@ export default defineComponent({
     },
     cadastrar() {
       NotebookClient.cadastrar(this.notebook)
-        .then(success => {
+        .then((success) => {
           this.notebook = new Notebook();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     fecharModal() {
-      this.$emit('fechar');
-    }
-  }
+      this.$emit("fechar");
+    },
+  },
 });
 </script>

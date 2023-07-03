@@ -1,4 +1,4 @@
 import { AbstractEntity } from "./abstract-entity";
-export class Curso extends AbstractEntity{
-    nome! : String
+export class Curso extends AbstractEntity {
+    nome!: String
 }
