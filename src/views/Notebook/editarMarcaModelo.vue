@@ -150,44 +150,6 @@ export default defineComponent({
       this.mostrarListaMarcas = false;
       this.mostrarListaModelos = true;
     },
-    onClickEditarMarca() {
-      MarcaClient.editar(this.marca.id, this.marca)
-        .then((sucess) => {
-          this.marca = new Marca();
-          console.log(sucess);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickExcluirCurso() {
-      MarcaClient.deletar(this.marca.id)
-        .then((sucess) => {
-          this.marca = new Marca();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickEditarModelo() {
-      ModeloClient.editar(this.modelo.id, this.modelo)
-        .then((sucess) => {
-          this.modelo = new Modelo();
-          console.log(sucess);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickExcluirPeriodo() {
-      ModeloClient.deletar(this.modelo.id)
-        .then((sucess) => {
-          this.modelo = new Modelo();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     fecharModal() {
       this.$emit("fechar");
     },

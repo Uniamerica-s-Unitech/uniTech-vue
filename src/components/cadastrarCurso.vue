@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
     <div class="modal_content">
+      <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
       <p>Novo curso</p>
       <form>
         <div class="input">
@@ -33,6 +38,12 @@ export default defineComponent({
     return {
       curso: new Curso(),
       exibirModal: true,
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   methods: {
@@ -40,9 +51,15 @@ export default defineComponent({
       CursoClient.cadastrar(this.curso)
         .then((sucess) => {
           this.curso = new Curso();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Curso cadastrado com sucesso";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel Cadastrar o Curso";
         });
     },
     fecharModal() {

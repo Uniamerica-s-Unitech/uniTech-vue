@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+    </div>
     <div>
       <h2>Nome do aluno:</h2>
       <select v-model="ticket.alunoId" disabled>
@@ -68,6 +73,12 @@ export default defineComponent({
       notebooks: new Array<Notebook>(),
       dataEntregaString: "",
       dataDevolucaoString: "",
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -118,9 +129,15 @@ export default defineComponent({
         .then((sucess) => {
           this.ticket = new Ticket();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Ticket finalizado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel finalizar o Ticket";
         });
     },
     preencherDataEntrega() {

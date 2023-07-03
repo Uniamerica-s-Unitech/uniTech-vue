@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
     <div class="modal_content">
+      <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
       <p>Novo notebook</p>
       <form>
         <div class="input">
@@ -51,6 +56,12 @@ export default defineComponent({
       modelos: new Array<Modelo>(),
       modeloSelecionado: "",
       exibirModal: true,
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   mounted() {
@@ -68,9 +79,15 @@ export default defineComponent({
       NotebookClient.cadastrar(this.notebook)
         .then((success) => {
           this.notebook = new Notebook();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Notebook cadastrado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel Cadastrar o Notebook ";
         });
     },
     fecharModal() {

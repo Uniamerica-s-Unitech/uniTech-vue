@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
     <div class="modal_content">
+      <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
       <p>Novo entrega</p>
       <form>
         <div class="input">
@@ -91,6 +96,12 @@ export default defineComponent({
       exibirModal: true,
       dataEntregaString: "",
       dataDevolucaoString: "",
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   mounted() {
@@ -116,9 +127,15 @@ export default defineComponent({
       TicketClient.cadastrar(this.ticket)
         .then((success) => {
           this.ticket = new Ticket();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Ticket cadastrado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel Cadastrar o Ticket ";
         });
     },
     fecharModal() {
@@ -165,6 +182,13 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
 
+  .mensagem{
+    padding: .5rem;
+    border: 1px solid var(--accent-black);
+    background-color: var(--accent-grey);
+    margin-bottom: 1rem;
+  }
+  
   p {
     margin: auto;
     font-size: 35px;

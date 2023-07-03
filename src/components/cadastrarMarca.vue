@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
     <div class="modal_content">
+      <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
       <p>Nova marca</p>
       <form>
         <div class="input">
@@ -35,6 +40,12 @@ export default defineComponent({
     return {
       marca: new Marca(),
       exibirModal: true,
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   methods: {
@@ -42,9 +53,15 @@ export default defineComponent({
       MarcaClient.cadastrar(this.marca)
         .then((sucess) => {
           this.marca = new Marca();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Marca cadastrada com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel Cadastrar a Marca ";
         });
     },
     fecharModal() {

@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+    </div>
     <div>
       <h2>ID-PATRIMONIO:</h2>
       <input type="text" v-model="notebook.patrimonio" />
@@ -41,6 +46,12 @@ export default defineComponent({
       notebook: new Notebook(),
       modelos: new Array<Modelo>(),
       marcas: new Array<Marca>(),
+        mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -92,18 +103,30 @@ export default defineComponent({
         .then((sucess) => {
           this.notebook = new Notebook();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Notebook alterado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel alterar o Notebook";
         });
     },
     onClickExcluir() {
       NotebookClient.deletar(this.notebook.id)
         .then((sucess) => {
           this.notebook = new Notebook();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Notebook deletado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel deletar o Notebook";
         });
     },
   },

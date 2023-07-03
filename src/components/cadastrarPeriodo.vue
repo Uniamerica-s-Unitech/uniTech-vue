@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
     <div class="modal_content">
+      <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
       <p>Novo período</p>
       <form>
         <div class="input">
@@ -33,6 +38,12 @@ export default defineComponent({
     return {
       periodo: new Periodo(),
       exibirModal: true,
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   methods: {
@@ -40,9 +51,15 @@ export default defineComponent({
       PeriodoClient.cadastrar(this.periodo)
         .then((sucess) => {
           this.periodo = new Periodo();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Periodo cadastrado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel Cadastrar o Periodo ";
         });
     },
     fecharModal() {

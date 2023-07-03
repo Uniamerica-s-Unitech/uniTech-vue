@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
     <div>
       <h2>Nome:</h2>
       <input type="text" v-model="periodo.nome" />
@@ -21,6 +26,12 @@ export default defineComponent({
   data() {
     return {
       periodo: new Periodo(),
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -48,18 +59,30 @@ export default defineComponent({
         .then((sucess) => {
           this.periodo = new Periodo();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Periodo alterado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel alterar o Periodo";
         });
     },
     onClickExcluir() {
       PeriodoClient.deletar(this.periodo.id)
         .then((sucess) => {
           this.periodo = new Periodo();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Periodo deletado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel deletar o Periodo";
         });
     },
   },

@@ -154,44 +154,6 @@ export default defineComponent({
       this.mostrarListaCursos = false;
       this.mostrarListaPeriodos = true;
     },
-    onClickEditarCurso() {
-      CursoClient.editar(this.curso.id, this.curso)
-        .then((sucess) => {
-          this.curso = new Curso();
-          console.log(sucess);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickExcluirCurso() {
-      CursoClient.deletar(this.curso.id)
-        .then((sucess) => {
-          this.curso = new Curso();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickEditarPeriodo() {
-      PeriodoClient.editar(this.periodo.id, this.periodo)
-        .then((sucess) => {
-          this.periodo = new Periodo();
-          console.log(sucess);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onClickExcluirPeriodo() {
-      PeriodoClient.deletar(this.periodo.id)
-        .then((sucess) => {
-          this.periodo = new Periodo();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     fecharModal() {
       this.$emit("fechar");
     },

@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+    </div>
     <div>
       <h2>Nome do modelo:</h2>
       <input type="text" v-model="modelo.nome" />
@@ -33,6 +38,12 @@ export default defineComponent({
     return {
       modelo: new Modelo(),
       marcas: new Array<Marca>(),
+        mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -71,18 +82,30 @@ export default defineComponent({
         .then((sucess) => {
           this.modelo = new Modelo();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Modelo alterado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel alterar o Modelo";
         });
     },
     onClickExcluir() {
       ModeloClient.deletar(this.modelo.id)
         .then((sucess) => {
           this.modelo = new Modelo();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Modelo deletado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel deleltar o Modelo";
         });
     },
   },

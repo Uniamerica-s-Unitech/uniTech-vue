@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+      </div>
     <div>
       <h2>Nome:</h2>
       <input type="text" v-model="aluno.nome" />
@@ -59,6 +64,12 @@ export default defineComponent({
       aluno: new Aluno(),
       cursos: new Array<Curso>(),
       periodos: new Array<Periodo>(),
+        mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -109,18 +120,29 @@ export default defineComponent({
         .then((sucess) => {
           this.aluno = new Aluno();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Aluno alterado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel alterar o Aluno";
         });
     },
     onClickExcluir() {
       AlunoClient.deletar(this.aluno.id)
         .then((sucess) => {
           this.aluno = new Aluno();
+
+          this.mensagem.titulo = "Aluno deletado com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel deleltar o Aluno";
         });
     },
   },

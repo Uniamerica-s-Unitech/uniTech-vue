@@ -1,5 +1,10 @@
 <template>
   <main class="main">
+    <div v-if="mensagem.ativo">
+          <div class="mensagem">
+            <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          </div>
+    </div>
     <div>
       <h2>Nome:</h2>
       <input type="text" v-model="marca.nome" />
@@ -21,6 +26,12 @@ export default defineComponent({
   data() {
     return {
       marca: new Marca(),
+      mensagem: {
+        ativo: false as boolean,
+        titulo: "" as string,
+        mensagem: "" as string,
+        css: "" as string
+      }
     };
   },
   computed: {
@@ -48,18 +59,30 @@ export default defineComponent({
         .then((sucess) => {
           this.marca = new Marca();
           console.log(sucess);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Marca alterada com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel alterar a Marca";
         });
     },
     onClickExcluir() {
       MarcaClient.deletar(this.marca.id)
         .then((sucess) => {
           this.marca = new Marca();
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Marca deletada com sucesso ";
         })
         .catch((error) => {
           console.log(error);
+
+          this.mensagem.ativo = true;
+          this.mensagem.titulo = "Erro, não foi possivel deleltar a Marca";
         });
     },
   },
