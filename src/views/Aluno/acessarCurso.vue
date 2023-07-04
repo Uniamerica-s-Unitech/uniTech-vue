@@ -6,7 +6,7 @@
           </div>
       </div>
     <div>
-      <h2>Nome:</h2>
+      <h2>Nome do curso:</h2>
       <input type="text" v-model="curso.nome" />
     </div>
     <div class="btns">

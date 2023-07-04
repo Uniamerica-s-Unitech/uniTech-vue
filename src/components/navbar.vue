@@ -26,7 +26,7 @@ nav{
   background-color: #fff;
   box-shadow: inset -14px 0px 29px -16px rgba(184,184,184,1);
   height: 100vh;
-  width: 18%;
+  width: 17.9%;
 
   div{
     display: flex;

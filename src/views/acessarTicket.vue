@@ -77,8 +77,8 @@ export default defineComponent({
         ativo: false as boolean,
         titulo: "" as string,
         mensagem: "" as string,
-        css: "" as string,
-      },
+        css: "" as string
+      }
     };
   },
   computed: {

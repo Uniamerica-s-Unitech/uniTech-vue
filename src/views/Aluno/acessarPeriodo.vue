@@ -6,7 +6,7 @@
           </div>
       </div>
     <div>
-      <h2>Nome:</h2>
+      <h2>Nome do periodo:</h2>
       <input type="text" v-model="periodo.nome" />
     </div>
     <div class="btns">

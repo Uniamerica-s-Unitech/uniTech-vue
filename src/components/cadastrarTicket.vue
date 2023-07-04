@@ -46,21 +46,6 @@
               Data atual
             </button>
           </div>
-          <div class="data">
-            <h2>Data da devolução:</h2>
-            <input
-              type="datetime-local"
-              v-model="dataDevolucaoString"
-              @change="updateDataDevolucao"
-            />
-            <button
-              class="btn_preencher"
-              type="button"
-              @click="preencherDataDevolucao"
-            >
-              Data atual
-            </button>
-          </div>
         </div>
 
         <div class="btns">
